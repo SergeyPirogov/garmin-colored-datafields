@@ -101,6 +101,9 @@ class ColoredPowerView extends WatchUi.DataField {
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
+        dc.setColor(textColor, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(4, 4, Graphics.FONT_XTINY, "3s PWR", Graphics.TEXT_JUSTIFY_LEFT);
+
         // White border outline
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(3);

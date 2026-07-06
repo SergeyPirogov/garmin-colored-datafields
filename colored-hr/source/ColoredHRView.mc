@@ -106,6 +106,9 @@ class ColoredHRView extends WatchUi.DataField {
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
+        dc.setColor(textColor, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(4, 4, Graphics.FONT_XTINY, "BPM", Graphics.TEXT_JUSTIFY_LEFT);
+
         // Zone color bar strip at top (like Wahoo's colored band)
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(3);

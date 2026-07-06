@@ -20,12 +20,12 @@ A Garmin Connect IQ data field for Edge cycling computers that displays heart ra
 | Z4   | Orange | 156–175           | Threshold     |
 | Z5   | Red    | > 175             | VO2 Max       |
 
-Text is white on all zones except Z3 (green), where black is used for contrast.
+Text is black on Z3 (green) for contrast, white on all other zones.
 
 ## Customizing Zones
 
 Open the Garmin Connect app → Your device → Data Fields → Colored HR → Settings.  
-Set the **upper BPM limit** for each zone (Zone 5 Max defaults to 220).
+Set the **upper BPM limit** for each zone (Zone 5 has no upper limit).
 
 ## Supported Devices
 
@@ -38,17 +38,26 @@ Set the **upper BPM limit** for each zone (Zone 5 Max defaults to 220).
 - [Garmin Connect IQ SDK](https://developer.garmin.com/connect-iq/sdk/)
 - A signing key (`developer_key.der`)
 
-### Build
+### Build .prg (simulator / sideload)
 
 ```bash
 SDK="/path/to/connectiq-sdk/bin"
 
 "$SDK/monkeyc" \
-  --output garmincoloredhr.prg \
-  --jungles monkey.jungle \
-  --device edge850 \
-  --private-key developer_key.der \
-  --warn
+  -f monkey.jungle \
+  -o garmincoloredhr.prg \
+  -d edge850 \
+  -y developer_key.der
+```
+
+### Build .iq (Connect IQ store submission)
+
+```bash
+"$SDK/monkeyc" \
+  -f monkey.jungle \
+  -o garmincoloredhr.iq \
+  -e \
+  -y developer_key.der
 ```
 
 ### Run in Simulator
