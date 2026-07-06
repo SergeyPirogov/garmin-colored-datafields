@@ -1,0 +1,89 @@
+{
+  "settings" : [ {
+    "key" : "Zone1Max",
+    "valueType" : "number",
+    "defaultValue" : 144,
+    "configTitle" : "Zone1MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 1,
+    "configMax" : 2000,
+    "configMaxLength" : null
+  }, {
+    "key" : "Zone2Max",
+    "valueType" : "number",
+    "defaultValue" : 195,
+    "configTitle" : "Zone2MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 1,
+    "configMax" : 2000,
+    "configMaxLength" : null
+  }, {
+    "key" : "Zone3Max",
+    "valueType" : "number",
+    "defaultValue" : 234,
+    "configTitle" : "Zone3MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 1,
+    "configMax" : 2000,
+    "configMaxLength" : null
+  }, {
+    "key" : "Zone4Max",
+    "valueType" : "number",
+    "defaultValue" : 273,
+    "configTitle" : "Zone4MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 1,
+    "configMax" : 2000,
+    "configMaxLength" : null
+  }, {
+    "key" : "Zone5Max",
+    "valueType" : "number",
+    "defaultValue" : 312,
+    "configTitle" : "Zone5MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 1,
+    "configMax" : 2000,
+    "configMaxLength" : null
+  } ],
+  "supportsLiveValidation" : false,
+  "languages" : {
+    "valyrian" : {
+      "Zone5MaxLabel" : "Zone 5 Max Watts",
+      "Zone1MaxLabel" : "Zone 1 Max Watts",
+      "Zone2MaxLabel" : "Zone 2 Max Watts",
+      "Zone4MaxLabel" : "Zone 4 Max Watts",
+      "Zone3MaxLabel" : "Zone 3 Max Watts",
+      "AppName" : "Colored Power"
+    }
+  }
+}

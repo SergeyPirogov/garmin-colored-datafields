@@ -1,0 +1,5 @@
+project.manifest = manifest.xml
+
+# Default base path
+base.sourcePath = source
+base.resourcePath = resources

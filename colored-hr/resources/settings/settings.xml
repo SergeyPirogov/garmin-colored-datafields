@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<settings>
+    <setting propertyKey="@Properties.Zone1Max" title="@Strings.Zone1MaxLabel">
+        <settingConfig type="numeric" min="60" max="220"/>
+    </setting>
+    <setting propertyKey="@Properties.Zone2Max" title="@Strings.Zone2MaxLabel">
+        <settingConfig type="numeric" min="60" max="220"/>
+    </setting>
+    <setting propertyKey="@Properties.Zone3Max" title="@Strings.Zone3MaxLabel">
+        <settingConfig type="numeric" min="60" max="220"/>
+    </setting>
+    <setting propertyKey="@Properties.Zone4Max" title="@Strings.Zone4MaxLabel">
+        <settingConfig type="numeric" min="60" max="220"/>
+    </setting>
+    <setting propertyKey="@Properties.Zone5Max" title="@Strings.Zone5MaxLabel">
+        <settingConfig type="numeric" min="60" max="220"/>
+    </setting>
+</settings>

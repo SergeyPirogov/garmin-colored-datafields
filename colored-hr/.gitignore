@@ -1,0 +1,13 @@
+*.prg
+*.prg.debug
+*.iq
+bin/
+*.der
+*.pem
+*.keystore
+.vs/
+.DS_Store
+gen/
+mir/
+external-mir/
+internal-mir/

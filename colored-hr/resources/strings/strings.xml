@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<strings>
+    <string id="AppName">Colored HR</string>
+    <string id="Zone1MaxLabel">Zone 1 Max BPM</string>
+    <string id="Zone2MaxLabel">Zone 2 Max BPM</string>
+    <string id="Zone3MaxLabel">Zone 3 Max BPM</string>
+    <string id="Zone4MaxLabel">Zone 4 Max BPM</string>
+    <string id="Zone5MaxLabel">Zone 5 Max BPM</string>
+    <string id="HRZonesGroup">HR Zones</string>
+</strings>

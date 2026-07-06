@@ -1,0 +1,90 @@
+{
+  "settings" : [ {
+    "key" : "Zone1Max",
+    "valueType" : "number",
+    "defaultValue" : 115,
+    "configTitle" : "Zone1MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 60,
+    "configMax" : 220,
+    "configMaxLength" : null
+  }, {
+    "key" : "Zone2Max",
+    "valueType" : "number",
+    "defaultValue" : 135,
+    "configTitle" : "Zone2MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 60,
+    "configMax" : 220,
+    "configMaxLength" : null
+  }, {
+    "key" : "Zone3Max",
+    "valueType" : "number",
+    "defaultValue" : 155,
+    "configTitle" : "Zone3MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 60,
+    "configMax" : 220,
+    "configMaxLength" : null
+  }, {
+    "key" : "Zone4Max",
+    "valueType" : "number",
+    "defaultValue" : 175,
+    "configTitle" : "Zone4MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 60,
+    "configMax" : 220,
+    "configMaxLength" : null
+  }, {
+    "key" : "Zone5Max",
+    "valueType" : "number",
+    "defaultValue" : 220,
+    "configTitle" : "Zone5MaxLabel",
+    "configPrompt" : null,
+    "configType" : "numeric",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : null,
+    "configMin" : 60,
+    "configMax" : 220,
+    "configMaxLength" : null
+  } ],
+  "supportsLiveValidation" : false,
+  "languages" : {
+    "valyrian" : {
+      "Zone5MaxLabel" : "Zone 5 Max BPM",
+      "Zone1MaxLabel" : "Zone 1 Max BPM",
+      "HRZonesGroup" : "HR Zones",
+      "Zone3MaxLabel" : "Zone 3 Max BPM",
+      "Zone2MaxLabel" : "Zone 2 Max BPM",
+      "Zone4MaxLabel" : "Zone 4 Max BPM",
+      "AppName" : "Colored HR"
+    }
+  }
+}
