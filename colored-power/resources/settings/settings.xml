@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
-<settings>
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <setting propertyKey="@Properties.PowerAvgMode" title="@Strings.PowerAvgModeLabel">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.PowerAvgInstant</listEntry>
+            <listEntry value="1">@Strings.PowerAvg3s</listEntry>
+            <listEntry value="2">@Strings.PowerAvg5s</listEntry>
+            <listEntry value="3">@Strings.PowerAvg10s</listEntry>
+        </settingConfig>
+    </setting>
     <setting propertyKey="@Properties.Zone1Max" title="@Strings.Zone1MaxLabel">
         <settingConfig type="numeric" min="1" max="2000"/>
     </setting>

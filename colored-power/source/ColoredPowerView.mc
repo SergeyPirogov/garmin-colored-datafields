@@ -23,8 +23,19 @@ class ColoredPowerView extends WatchUi.DataField {
         0x8000FF, // Zone 6 - Purple
     ] as Array<Number>;
 
+    // compute() is called at 1 Hz, so buffer sizes map directly to seconds
+    hidden const AVG_SIZES = [1, 3, 5, 10] as Array<Number>;
+    hidden const AVG_LABELS = ["PWR", "3s PWR", "5s PWR", "10s PWR"] as Array<String>;
+
     hidden var mPower as Number = 0;
     hidden var mZone as Number = 0;
+    hidden var mAvgMode as Number = 1; // default 3s
+
+    // Circular buffer for rolling average
+    hidden var mBuf as Array<Number> = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] as Array<Number>;
+    hidden var mBufIdx as Number = 0;
+    hidden var mBufSize as Number = 3;
+    hidden var mBufFilled as Number = 0;
 
     // Power zone thresholds as absolute watts [z1_max, z2_max, z3_max, z4_max, z5_max]
     // Values above z5_max are zone 6
@@ -32,21 +43,47 @@ class ColoredPowerView extends WatchUi.DataField {
 
     function initialize() {
         DataField.initialize();
-        loadZoneSettings();
+        loadSettings();
     }
 
-    hidden function loadZoneSettings() as Void {
+    hidden function loadSettings() as Void {
         var z1 = Properties.getValue("Zone1Max") as Number?;
         var z2 = Properties.getValue("Zone2Max") as Number?;
         var z3 = Properties.getValue("Zone3Max") as Number?;
         var z4 = Properties.getValue("Zone4Max") as Number?;
         var z5 = Properties.getValue("Zone5Max") as Number?;
 
-        mZoneThresholds[0] = (z1 != null) ? z1 : 144;  // ~55% of 260W FTP
-        mZoneThresholds[1] = (z2 != null) ? z2 : 195;  // ~75% of 260W FTP
-        mZoneThresholds[2] = (z3 != null) ? z3 : 234;  // ~90% of 260W FTP
-        mZoneThresholds[3] = (z4 != null) ? z4 : 273;  // ~105% of 260W FTP
-        mZoneThresholds[4] = (z5 != null) ? z5 : 312;  // ~120% of 260W FTP
+        mZoneThresholds[0] = (z1 != null) ? z1 : 144;
+        mZoneThresholds[1] = (z2 != null) ? z2 : 195;
+        mZoneThresholds[2] = (z3 != null) ? z3 : 234;
+        mZoneThresholds[3] = (z4 != null) ? z4 : 273;
+        mZoneThresholds[4] = (z5 != null) ? z5 : 312;
+
+        var mode = Properties.getValue("PowerAvgMode") as Number?;
+        var newMode = (mode != null) ? mode : 1;
+        if (newMode < 0 || newMode > 3) { newMode = 1; }
+
+        if (newMode != mAvgMode) {
+            mAvgMode = newMode;
+            mBufSize = AVG_SIZES[mAvgMode];
+            // Reset buffer when mode changes
+            for (var i = 0; i < mBuf.size(); i++) { mBuf[i] = 0; }
+            mBufIdx = 0;
+            mBufFilled = 0;
+        }
+    }
+
+    hidden function pushSample(watts as Number) as Void {
+        mBuf[mBufIdx] = watts;
+        mBufIdx = (mBufIdx + 1) % mBufSize;
+        if (mBufFilled < mBufSize) { mBufFilled++; }
+    }
+
+    hidden function rollingAverage() as Number {
+        if (mBufFilled == 0) { return 0; }
+        var sum = 0;
+        for (var i = 0; i < mBufFilled; i++) { sum += mBuf[i]; }
+        return (sum / mBufFilled) as Number;
     }
 
     hidden function getZone(power as Number) as Number {
@@ -60,13 +97,14 @@ class ColoredPowerView extends WatchUi.DataField {
     }
 
     function compute(info as Activity.Info) as Void {
+        loadSettings();
+        var instant = 0;
         if (info has :currentPower && info.currentPower != null) {
-            mPower = info.currentPower as Number;
-        } else {
-            mPower = 0;
+            instant = info.currentPower as Number;
         }
+        pushSample(instant);
+        mPower = rollingAverage();
         mZone = getZone(mPower);
-        loadZoneSettings();
     }
 
     function onUpdate(dc as Graphics.Dc) as Void {
@@ -102,7 +140,13 @@ class ColoredPowerView extends WatchUi.DataField {
         );
 
         dc.setColor(textColor, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(4, 4, Graphics.FONT_XTINY, "3s PWR", Graphics.TEXT_JUSTIFY_LEFT);
+        var topLabel = AVG_LABELS[mAvgMode];
+        if (mZone > 0) {
+            var zLow = (mZone == 1) ? 0 : mZoneThresholds[mZone - 2] + 1;
+            var zHigh = (mZone <= 5) ? mZoneThresholds[mZone - 1] : mZoneThresholds[4] + 1;
+            topLabel = "Z" + mZone + " (" + zLow + "-" + zHigh + ") " + AVG_LABELS[mAvgMode];
+        }
+        dc.drawText(4, 4, Graphics.FONT_XTINY, topLabel, Graphics.TEXT_JUSTIFY_LEFT);
 
         // White border outline
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);

@@ -2,17 +2,11 @@ import Toybox.Activity;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
-import Toybox.Application;
-import Toybox.Application.Properties;
+import Toybox.UserProfile;
 
 class ColoredHRView extends WatchUi.DataField {
 
     // HR zone colors matching Wahoo ELEMNT style
-    // Zone 1: Gray  (recovery)
-    // Zone 2: Blue  (endurance)
-    // Zone 3: Green (aerobic)
-    // Zone 4: Yellow/Orange (threshold)
-    // Zone 5: Red   (VO2 max)
     hidden const ZONE_COLORS = [
         0x808080, // Zone 1 - Gray
         0x0080FF, // Zone 2 - Blue
@@ -24,27 +18,23 @@ class ColoredHRView extends WatchUi.DataField {
     hidden var mHR as Number = 0;
     hidden var mZone as Number = 0;
 
-    // HR zone thresholds [zone1_max, zone2_max, zone3_max, zone4_max]
-    // Values above zone4_max are zone 5
-    hidden var mZoneThresholds as Array<Number> = [0, 0, 0, 0, 0];
+    // Upper BPM threshold for each zone [z1_max, z2_max, z3_max, z4_max, z5_max]
+    hidden var mZoneThresholds as Array<Number> = [115, 135, 155, 175, 220];
 
     function initialize() {
         DataField.initialize();
-        loadZoneSettings();
+        loadZones();
     }
 
-    hidden function loadZoneSettings() as Void {
-        var z1 = Properties.getValue("Zone1Max") as Number?;
-        var z2 = Properties.getValue("Zone2Max") as Number?;
-        var z3 = Properties.getValue("Zone3Max") as Number?;
-        var z4 = Properties.getValue("Zone4Max") as Number?;
-        var z5 = Properties.getValue("Zone5Max") as Number?;
-
-        mZoneThresholds[0] = (z1 != null) ? z1 : 115;
-        mZoneThresholds[1] = (z2 != null) ? z2 : 135;
-        mZoneThresholds[2] = (z3 != null) ? z3 : 155;
-        mZoneThresholds[3] = (z4 != null) ? z4 : 175;
-        mZoneThresholds[4] = (z5 != null) ? z5 : 220;
+    hidden function loadZones() as Void {
+        var zones = UserProfile.getHeartRateZones(UserProfile.HR_ZONE_SPORT_GENERIC);
+        if (zones != null && zones.size() >= 6) {
+            // SDK returns [z0_low, z1_low, z2_low, z3_low, z4_low, z5_low]
+            // Upper bound of zone N = lower bound of zone N+1 - 1
+            for (var i = 0; i < 5; i++) {
+                mZoneThresholds[i] = zones[i + 1] - 1;
+            }
+        }
     }
 
     hidden function getZone(hr as Number) as Number {
@@ -64,15 +54,12 @@ class ColoredHRView extends WatchUi.DataField {
             mHR = 0;
         }
         mZone = getZone(mHR);
-        // Reload settings on each compute in case user changed them
-        loadZoneSettings();
     }
 
     function onUpdate(dc as Graphics.Dc) as Void {
         var width = dc.getWidth();
         var height = dc.getHeight();
 
-        // Determine zone color
         var bgColor;
         if (mZone == 0 || mHR == 0) {
             bgColor = Graphics.COLOR_DK_GRAY;
@@ -80,41 +67,39 @@ class ColoredHRView extends WatchUi.DataField {
             bgColor = ZONE_COLORS[mZone - 1] as Number;
         }
 
-        // Fill background with zone color
         dc.setColor(bgColor, bgColor);
         dc.fillRectangle(0, 0, width, height);
 
-        // Choose text color for contrast
-        // Zones 1 (gray) and 2 (blue) get white text, rest get white too
         var textColor = Graphics.COLOR_WHITE;
         if (mZone == 3) {
-            // Green zone - use black for better contrast
             textColor = Graphics.COLOR_BLACK;
         }
 
-        // Draw HR value - large centered
         dc.setColor(textColor, Graphics.COLOR_TRANSPARENT);
 
         var hrText = (mHR > 0) ? mHR.toString() : "--";
 
-        // Large HR number in the center
         dc.drawText(
             width / 2,
-            height / 2,
+            height / 2 - 10,
             Graphics.FONT_NUMBER_HOT,
             hrText,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
         dc.setColor(textColor, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(4, 4, Graphics.FONT_XTINY, "BPM", Graphics.TEXT_JUSTIFY_LEFT);
+        var topLabel = "BPM";
+        if (mZone > 0) {
+            var zLow = (mZone == 1) ? 0 : mZoneThresholds[mZone - 2] + 1;
+            var zHigh = mZoneThresholds[mZone - 1];
+            topLabel = "Z" + mZone + " (" + zLow + "-" + zHigh + ") BPM";
+        }
+        dc.drawText(4, 4, Graphics.FONT_XTINY, topLabel, Graphics.TEXT_JUSTIFY_LEFT);
 
-        // Zone color bar strip at top (like Wahoo's colored band)
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(3);
         dc.drawRectangle(0, 0, width, height);
 
-        // Draw 5-segment zone bar at bottom
         drawZoneBar(dc, width, height);
     }
 
@@ -131,7 +116,6 @@ class ColoredHRView extends WatchUi.DataField {
             dc.setColor(segColor, segColor);
             dc.fillRectangle(segX, barY, segWidth, barHeight);
 
-            // Highlight active zone segment with a white border
             if (mZone > 0 && i == mZone - 1) {
                 dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
                 dc.setPenWidth(2);

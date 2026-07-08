@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <properties>
+    <!-- 0=Instant, 1=3s, 2=5s, 3=10s -->
+    <property id="PowerAvgMode" type="number">1</property>
     <!-- Power zone thresholds - upper watts limit for each zone -->
     <property id="Zone1Max" type="number">144</property>
     <property id="Zone2Max" type="number">195</property>
