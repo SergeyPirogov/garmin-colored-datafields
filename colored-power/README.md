@@ -5,30 +5,32 @@ A Garmin Connect IQ data field for Edge cycling computers that displays power wi
 ## Features
 
 - Full-screen background color changes with power zone (like Wahoo ELEMNT)
-- Large power number centered on screen
+- Large power number centered on screen, using a configurable rolling average
 - 6-segment zone color bar at the bottom with the active zone highlighted
 - White border outline around the field
-- Fully configurable power zone thresholds via Garmin Connect app settings
+- Zones derived automatically from your FTP
 
 ## Zone Colors
 
-| Zone | Color  | Default Watts | Meaning         |
-|------|--------|---------------|-----------------|
-| Z1   | Gray   | ≤ 144         | Active Recovery |
-| Z2   | Blue   | 145–195       | Endurance       |
-| Z3   | Green  | 196–234       | Tempo           |
-| Z4   | Yellow | 235–273       | Threshold       |
-| Z5   | Red    | 274–312       | VO2 Max         |
-| Z6   | Purple | > 312         | Anaerobic       |
+Zones are computed as a percentage of your FTP (Coggan power zones). With the default 260W FTP:
 
-Text is black on Z3 (green) and Z4 (yellow) for contrast, white on all other zones.
+| Zone | Color  | % FTP    | Default Watts | Meaning         |
+|------|--------|----------|----------------|-----------------|
+| Z1   | Gray   | ≤ 55%    | ≤ 143          | Active Recovery |
+| Z2   | Blue   | 56–75%   | 144–195        | Endurance       |
+| Z3   | Green  | 76–90%   | 196–234        | Tempo           |
+| Z4   | Yellow | 91–105%  | 235–273        | Threshold       |
+| Z5   | Red    | 106–125% | 274–325        | VO2 Max         |
+| Z6   | Purple | > 125%   | > 325          | Anaerobic       |
 
-Defaults are based on a 260W FTP.
+Text is black on Z4 (yellow) for contrast, white on all other zones.
 
-## Customizing Zones
+## Settings
 
-Open the Garmin Connect app → Your device → Data Fields → Colored Power → Settings.  
-Set the **upper watt limit** for each zone (Zone 6 has no upper limit).
+Open the Garmin Connect app → Your device → Data Fields → Colored Power → Settings.
+
+- **FTP (watts)** — your functional threshold power; zone thresholds are recalculated from this. Defaults to 260W.
+- **Power Averaging** — Instant, 3s, 5s, or 10s rolling average of power. Defaults to 3s.
 
 ## Supported Devices
 
@@ -40,6 +42,8 @@ Set the **upper watt limit** for each zone (Zone 6 has no upper limit).
 
 - [Garmin Connect IQ SDK](https://developer.garmin.com/connect-iq/sdk/)
 - A signing key (`developer_key.der`)
+
+Use the repo-level [`build.sh`](../build.sh) to build both data fields at once into `dist/`. The commands below are for building this project directly.
 
 ### Build .prg (simulator / sideload)
 

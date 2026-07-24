@@ -8,24 +8,23 @@ A Garmin Connect IQ data field for Edge cycling computers that displays heart ra
 - Large HR number centered on screen
 - 5-segment zone color bar at the bottom with the active zone highlighted
 - White border outline around the field
-- Fully configurable HR zone thresholds via Garmin Connect app settings
+- Zone thresholds loaded automatically from your Garmin user profile
 
 ## Zone Colors
 
-| Zone | Color  | Default BPM range | Meaning       |
-|------|--------|-------------------|---------------|
-| Z1   | Gray   | ≤ 115             | Recovery      |
-| Z2   | Blue   | 116–135           | Endurance     |
-| Z3   | Green  | 136–155           | Aerobic/Tempo |
-| Z4   | Orange | 156–175           | Threshold     |
-| Z5   | Red    | > 175             | VO2 Max       |
+| Zone | Color  | Meaning       |
+|------|--------|---------------|
+| Z1   | Gray   | Recovery      |
+| Z2   | Blue   | Endurance     |
+| Z3   | Green  | Aerobic/Tempo |
+| Z4   | Orange | Threshold     |
+| Z5   | Red    | VO2 Max       |
 
-Text is black on Z3 (green) for contrast, white on all other zones.
+Text is black on Z4 (orange) for contrast, white on all other zones.
 
-## Customizing Zones
+## Zone Thresholds
 
-Open the Garmin Connect app → Your device → Data Fields → Colored HR → Settings.  
-Set the **upper BPM limit** for each zone (Zone 5 has no upper limit).
+BPM thresholds come from your Garmin Connect user profile's generic heart rate zones — there are no zone settings to configure on the data field itself.
 
 ## Supported Devices
 
@@ -37,6 +36,8 @@ Set the **upper BPM limit** for each zone (Zone 5 has no upper limit).
 
 - [Garmin Connect IQ SDK](https://developer.garmin.com/connect-iq/sdk/)
 - A signing key (`developer_key.der`)
+
+Use the repo-level [`build.sh`](../build.sh) to build both data fields at once into `dist/`. The commands below are for building this project directly.
 
 ### Build .prg (simulator / sideload)
 
