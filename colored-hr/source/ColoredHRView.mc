@@ -71,7 +71,7 @@ class ColoredHRView extends WatchUi.DataField {
         dc.fillRectangle(0, 0, width, height);
 
         var textColor = Graphics.COLOR_WHITE;
-        if (mZone == 3) {
+        if (mZone == 4) {
             textColor = Graphics.COLOR_BLACK;
         }
 
@@ -81,20 +81,16 @@ class ColoredHRView extends WatchUi.DataField {
 
         dc.drawText(
             width / 2,
-            height / 2 - 10,
+            height / 2,
             Graphics.FONT_NUMBER_HOT,
             hrText,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
         dc.setColor(textColor, Graphics.COLOR_TRANSPARENT);
-        var topLabel = "BPM";
         if (mZone > 0) {
-            var zLow = (mZone == 1) ? 0 : mZoneThresholds[mZone - 2] + 1;
-            var zHigh = mZoneThresholds[mZone - 1];
-            topLabel = "Z" + mZone + " (" + zLow + "-" + zHigh + ") BPM";
+            dc.drawText(4, 4, Graphics.FONT_XTINY, "Z" + mZone, Graphics.TEXT_JUSTIFY_LEFT);
         }
-        dc.drawText(4, 4, Graphics.FONT_XTINY, topLabel, Graphics.TEXT_JUSTIFY_LEFT);
 
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(3);

@@ -8,19 +8,7 @@
             <listEntry value="3">@Strings.PowerAvg10s</listEntry>
         </settingConfig>
     </setting>
-    <setting propertyKey="@Properties.Zone1Max" title="@Strings.Zone1MaxLabel">
-        <settingConfig type="numeric" min="1" max="2000"/>
-    </setting>
-    <setting propertyKey="@Properties.Zone2Max" title="@Strings.Zone2MaxLabel">
-        <settingConfig type="numeric" min="1" max="2000"/>
-    </setting>
-    <setting propertyKey="@Properties.Zone3Max" title="@Strings.Zone3MaxLabel">
-        <settingConfig type="numeric" min="1" max="2000"/>
-    </setting>
-    <setting propertyKey="@Properties.Zone4Max" title="@Strings.Zone4MaxLabel">
-        <settingConfig type="numeric" min="1" max="2000"/>
-    </setting>
-    <setting propertyKey="@Properties.Zone5Max" title="@Strings.Zone5MaxLabel">
+    <setting propertyKey="@Properties.FTP" title="@Strings.FTPLabel">
         <settingConfig type="numeric" min="1" max="2000"/>
     </setting>
 </settings>

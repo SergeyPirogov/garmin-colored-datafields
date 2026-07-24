@@ -6,9 +6,5 @@
     <string id="PowerAvg3s">3 Second</string>
     <string id="PowerAvg5s">5 Second</string>
     <string id="PowerAvg10s">10 Second</string>
-    <string id="Zone1MaxLabel">Zone 1 Max Watts</string>
-    <string id="Zone2MaxLabel">Zone 2 Max Watts</string>
-    <string id="Zone3MaxLabel">Zone 3 Max Watts</string>
-    <string id="Zone4MaxLabel">Zone 4 Max Watts</string>
-    <string id="Zone5MaxLabel">Zone 5 Max Watts</string>
+    <string id="FTPLabel">FTP (watts)</string>
 </strings>

@@ -38,7 +38,7 @@ class ColoredPowerView extends WatchUi.DataField {
     hidden var mBufFilled as Number = 0;
 
     // Power zone thresholds as absolute watts [z1_max, z2_max, z3_max, z4_max, z5_max]
-    // Values above z5_max are zone 6
+    // Coggan: Z1<55%, Z2 56-75%, Z3 76-90%, Z4 91-105%, Z5 106-120%, Z6>120% FTP
     hidden var mZoneThresholds as Array<Number> = [0, 0, 0, 0, 0];
 
     function initialize() {
@@ -47,17 +47,14 @@ class ColoredPowerView extends WatchUi.DataField {
     }
 
     hidden function loadSettings() as Void {
-        var z1 = Properties.getValue("Zone1Max") as Number?;
-        var z2 = Properties.getValue("Zone2Max") as Number?;
-        var z3 = Properties.getValue("Zone3Max") as Number?;
-        var z4 = Properties.getValue("Zone4Max") as Number?;
-        var z5 = Properties.getValue("Zone5Max") as Number?;
+        var ftpProp = Properties.getValue("FTP") as Number?;
+        var ftp = (ftpProp != null && ftpProp > 0) ? ftpProp : 260;
 
-        mZoneThresholds[0] = (z1 != null) ? z1 : 144;
-        mZoneThresholds[1] = (z2 != null) ? z2 : 195;
-        mZoneThresholds[2] = (z3 != null) ? z3 : 234;
-        mZoneThresholds[3] = (z4 != null) ? z4 : 273;
-        mZoneThresholds[4] = (z5 != null) ? z5 : 312;
+        mZoneThresholds[0] = (ftp * 55 / 100);
+        mZoneThresholds[1] = (ftp * 75 / 100);
+        mZoneThresholds[2] = (ftp * 90 / 100);
+        mZoneThresholds[3] = (ftp * 105 / 100);
+        mZoneThresholds[4] = (ftp * 125 / 100);
 
         var mode = Properties.getValue("PowerAvgMode") as Number?;
         var newMode = (mode != null) ? mode : 1;
@@ -121,9 +118,8 @@ class ColoredPowerView extends WatchUi.DataField {
         dc.setColor(bgColor, bgColor);
         dc.fillRectangle(0, 0, width, height);
 
-        // Black text on green (Z3) and yellow (Z4) for contrast, white elsewhere
         var textColor = Graphics.COLOR_WHITE;
-        if (mZone == 3 || mZone == 4) {
+        if (mZone == 4) {
             textColor = Graphics.COLOR_BLACK;
         }
 
@@ -140,13 +136,9 @@ class ColoredPowerView extends WatchUi.DataField {
         );
 
         dc.setColor(textColor, Graphics.COLOR_TRANSPARENT);
-        var topLabel = AVG_LABELS[mAvgMode];
         if (mZone > 0) {
-            var zLow = (mZone == 1) ? 0 : mZoneThresholds[mZone - 2] + 1;
-            var zHigh = (mZone <= 5) ? mZoneThresholds[mZone - 1] : mZoneThresholds[4] + 1;
-            topLabel = "Z" + mZone + " (" + zLow + "-" + zHigh + ") " + AVG_LABELS[mAvgMode];
+            dc.drawText(4, 4, Graphics.FONT_XTINY, "Z" + mZone, Graphics.TEXT_JUSTIFY_LEFT);
         }
-        dc.drawText(4, 4, Graphics.FONT_XTINY, topLabel, Graphics.TEXT_JUSTIFY_LEFT);
 
         // White border outline
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);

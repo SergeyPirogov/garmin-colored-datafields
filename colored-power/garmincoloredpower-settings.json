@@ -1,5 +1,32 @@
 {
   "settings" : [ {
+    "key" : "PowerAvgMode",
+    "valueType" : "number",
+    "defaultValue" : 1,
+    "configTitle" : "PowerAvgModeLabel",
+    "configPrompt" : null,
+    "configType" : "list",
+    "configError" : null,
+    "configHelpUrl" : null,
+    "configReadonly" : false,
+    "configRequired" : false,
+    "configOptions" : [ {
+      "display" : "PowerAvgInstant",
+      "value" : 0
+    }, {
+      "display" : "PowerAvg3s",
+      "value" : 1
+    }, {
+      "display" : "PowerAvg5s",
+      "value" : 2
+    }, {
+      "display" : "PowerAvg10s",
+      "value" : 3
+    } ],
+    "configMin" : null,
+    "configMax" : null,
+    "configMaxLength" : null
+  }, {
     "key" : "Zone1Max",
     "valueType" : "number",
     "defaultValue" : 144,
@@ -79,11 +106,16 @@
   "languages" : {
     "valyrian" : {
       "Zone5MaxLabel" : "Zone 5 Max Watts",
+      "PowerAvg10s" : "10 Second",
       "Zone1MaxLabel" : "Zone 1 Max Watts",
+      "PowerAvgInstant" : "Instant",
+      "Zone3MaxLabel" : "Zone 3 Max Watts",
+      "PowerAvg3s" : "3 Second",
       "Zone2MaxLabel" : "Zone 2 Max Watts",
       "Zone4MaxLabel" : "Zone 4 Max Watts",
-      "Zone3MaxLabel" : "Zone 3 Max Watts",
-      "AppName" : "Colored Power"
+      "AppName" : "Colored Power",
+      "PowerAvgModeLabel" : "Power Averaging",
+      "PowerAvg5s" : "5 Second"
     }
   }
 }

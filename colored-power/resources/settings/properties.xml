@@ -2,10 +2,6 @@
 <properties>
     <!-- 0=Instant, 1=3s, 2=5s, 3=10s -->
     <property id="PowerAvgMode" type="number">1</property>
-    <!-- Power zone thresholds - upper watts limit for each zone -->
-    <property id="Zone1Max" type="number">144</property>
-    <property id="Zone2Max" type="number">195</property>
-    <property id="Zone3Max" type="number">234</property>
-    <property id="Zone4Max" type="number">273</property>
-    <property id="Zone5Max" type="number">312</property>
+    <!-- FTP in watts; zones derived as % of FTP -->
+    <property id="FTP" type="number">260</property>
 </properties>
