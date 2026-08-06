@@ -71,9 +71,6 @@ class ColoredHRView extends WatchUi.DataField {
         dc.fillRectangle(0, 0, width, height);
 
         var textColor = Graphics.COLOR_WHITE;
-        if (mZone == 4) {
-            textColor = Graphics.COLOR_BLACK;
-        }
 
         dc.setColor(textColor, Graphics.COLOR_TRANSPARENT);
 
